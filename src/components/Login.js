@@ -1,8 +1,15 @@
 import React from 'react';
 import './Login.css';
 import { Button } from '@material-ui/core';
+import { auth, provider } from '../firebase'; 
 
-function Login() {
+function Login({ user, setUser }) {
+    const signInHandler = () => {
+        auth.signInWithPopup(provider)
+            .then(result => setUser(...user, result.user))
+            .catch(error => alert(error.message));
+    }
+
     return (
         <div className="login">
             <div className="login__logo">
@@ -12,7 +19,7 @@ function Login() {
                 />
                 <Button 
                     type="submit"
-
+                    onClick={signInHandler}
                 >Sign In</Button>
             </div>
         </div>

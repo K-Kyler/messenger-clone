@@ -11,8 +11,8 @@ import Login from './components/Login';
 function App() {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
-  const [username, setUsername] = useState('');
-  const user = null;
+  const [user, setUser] = useState('');
+
   var messagesEnd = useRef(null);
 
   useEffect(() => {
@@ -26,10 +26,6 @@ function App() {
       });
   }, []);
 
-  // useEffect(() => {
-  //   setUsername(prompt("Let's we know who you are..."));
-  // }, []);
-
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -40,7 +36,9 @@ function App() {
     // Append new message to firebase store
     db.collection('messages').add({
       message: input,
-      username: username,
+      username: user.displayName,
+      email: user.email,
+      profilePic: user.photoURL,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     });
 
@@ -53,17 +51,17 @@ function App() {
   }
 
   const scrollToBottom = () => {
-    {user !== null ? messagesEnd.scrollIntoView({ behavior: "smooth" }) : ''}
+    {user != '' ? messagesEnd.scrollIntoView({ behavior: "smooth" }) : ''}
   }
 
   return (
     <div className="app">
-      {!user ? <Login /> : 
+      {!user ? <Login user={user} setUser={setUser} /> :
         <>
           <div className="app__header">
             <img src="https://facebookbrand.com/wp-content/uploads/2020/10/Logo_Messenger_NewBlurple-399x399-1.png?w=100&h=100" />
             <h1>Messenger App</h1>
-            <h2>What's up {username}</h2>
+            <h2>What's up {user.displayName}</h2>
           </div>
 
           <form 
@@ -94,7 +92,7 @@ function App() {
               messages.map(({ id, message }) => (
                 <Message 
                   key={id} 
-                  username={username} 
+                  userEmail={user.email}
                   message={message}
                 />
               ))

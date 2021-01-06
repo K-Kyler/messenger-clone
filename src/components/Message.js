@@ -2,13 +2,13 @@ import React, { forwardRef } from 'react';
 import './Message.css';
 import { Card, CardContent, Typography, Avatar } from '@material-ui/core';
 
-const Message = forwardRef(({ username,  message}, ref) => {
-    const isUser = username === message.username;
+const Message = forwardRef(({ userEmail,  message}, ref) => {
+    const isUser = userEmail === message.email;
 
     return (
         <div ref={ref} className={`message ${isUser && "message__user"}`}>
             <div className="message__component">
-                {!isUser && <Avatar className="message__avatar" />}
+                {!isUser && <Avatar className="message__avatar" src={message.profilePic} />}
                 <div className="message__body">
                     <h2>{!isUser && `${message.username}`}</h2>
                     <Card 
