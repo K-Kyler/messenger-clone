@@ -60,7 +60,7 @@ function App() {
         <>
           <div className="app__header">
             <img src="https://facebookbrand.com/wp-content/uploads/2020/10/Logo_Messenger_NewBlurple-399x399-1.png?w=100&h=100" />
-            <h1>Welcome to Messenger</h1>
+            <h1>Messenger App</h1>
             <h2>What's up {user.displayName}?</h2>
           </div>
 
